@@ -1,0 +1,240 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<title>
+Template Tuner
+</title>
+<script type="text/javascript" src="jscolor/jscolor.js"></script>
+
+
+<link rel="stylesheet" type="text/css" href="scripts/slider.css">
+<script type="text/javascript" src="scripts/addanevent.js"></script>
+<script type="text/javascript" src="scripts/slider.js"></script>
+<script type="text/javascript" src="scripts/slider-setup.js"></script>
+
+
+
+
+
+<style>
+body	{	position: relative;	margin: 0 ; padding: 0;	}
+#tuner	{	position: absolute;top: 10px; left: 10px;  width: 220px; border: 1px solid #444; border-bottom: none;z-index: 5;
+				background-color: rgba(220,220,220,.7);
+	}
+.section	{	border-bottom: 1px solid #333;	font-size: 12px; font-family: arial;	}
+.section h4	{	margin: 0; padding: 0; background: #eee; text-indent: 4px; border-bottom: 1px solid #333;		}
+.section h4 a	{	text-decoration: none; float:right;padding-right: 5px;	}
+.s_inner	{	height: 500px;	display: none; font-size: 11px; padding-left: 4px;	}
+
+.t_section	{ height: 80px;	display: block;	border-bottom: 2px solid #333;}
+.t_section h4	{ margin: 0; padding: 0;  border-bottom: 1px solid #333; background: #eee;		}
+.t_inner	{	padding-left: 4px;	font-size: 12px; font-family: arial;}
+
+#tuner select	{ margin: 4px;	}
+label	{ display: block;	}
+
+#page	{ width: 800px; margin: 0 auto;position: relative; height: 700px;border: 1px solid #333; 	}
+#page h1	{	margin: 0; padding: 0; border: 1px solid;	}
+
+</style>
+
+<script>
+function toggle(pare)	{
+var ele = document.getElementById(pare).getElementsByTagName('div')[0];
+var caller = document.getElementById(pare).childNodes[1]; 
+
+if(ele.style.display == '')	{			ele.style.display = 'none';		}
+if(ele.style.display == 'block')
+	{
+		ele.style.display = 'none';
+		caller.childNodes[1].innerHTML = '+';
+	}
+else
+	{
+	ele.style.display = 'block';
+	caller.childNodes[1].innerHTML = '^';
+	}
+}
+function load(item)	{
+	alert(item.selectedIndex);
+
+}
+function change_border_size(index)
+	{
+document.getElementsByTagName('H1')[0].style.borderWidth = index;
+	}
+function change_font_family(index)
+	{
+document.getElementsByTagName('H1')[0].style.fontFamily = index;
+	}
+function change_font_size(index)
+	{
+document.getElementsByTagName('H1')[0].style.fontSize = index;	
+	}	
+function change_text_dir	(index)
+	{
+document.getElementsByTagName('H1')[0].style.textAlign = index;	
+	}		
+function change_padding	(index)
+	{
+document.getElementsByTagName('H1')[0].style.padding = index;	
+	}		
+function change_margin	(index)
+	{
+document.getElementsByTagName('H1')[0].style.margin = index;	
+	}		
+function change_text	(index)
+	{
+document.getElementsByTagName('H1')[0].innerHTML = index;	
+	}	
+
+
+
+
+</script>
+
+</head>
+<body><div id="tuner">
+	<div class="t_section" id="tinfo">
+	<h4>Info  </h4>
+		<div class="t_inner">
+		Template : Default <br />
+		<input type="submit" onclick="return false;" value="save" />
+		</div>
+	</div>
+
+	<div class="section" id="s1">
+	<h4>Header <a href="" onclick="toggle('s1');return false;">+</a></h4>
+		<div class="s_inner">
+		<!--
+		<select id="hdr_list" class="property_list" onchange="load(this);">
+			<option value="bgclr"> Background Color</option>
+			<option value="font"> Font-Family </option>
+			<option value="fontcolor"> Font Color </option>			
+			<option value="size"> Size </option>
+			<option value="height"> Height </option>
+			<option value="width"> Width </option>
+			<option value="border"> Border </option>
+		</select>
+		-->
+<label>Font Color </label>		
+ <input class="color" onchange="document.getElementsByTagName('H1')[0].style.color = '#'+this.color">
+ <label> Background Color </label>		
+<input class="color" onchange="document.getElementsByTagName('H1')[0].style.backgroundColor = '#'+this.color">
+<label> Border Color </label>		
+ <input class="color" onchange="document.getElementsByTagName('H1')[0].style.borderColor = '#'+this.color">
+ <!--
+<label> Border Size </label>	
+ <select onchange="change_border_size(this.options[this.selectedIndex].value);return false;">
+ <option value="1px">1</option>
+ <option value="2px">2</option>
+ <option value="3px">3</option>
+ <option value="5px">5</option>
+ <option value="10px">10</option>
+ </select>
+-->
+<label> Font Family </label>	
+<select onchange="change_font_family(this.options[this.selectedIndex].value);return false;">
+	<option value="arial"> Arial </option>
+	<option value="tahoma"> Tahoma </option>
+	<option value="fantasy"> Fantasy </option>
+</select>
+<label> Font Size </label>	
+<select onchange="change_font_size(this.options[this.selectedIndex].value);return false;">
+	<option value="18px"> 18px </option>
+	<option value="22px"> 22px</option>
+	<option value="28px"> 28px </option>
+		<option value="48px"> 48px </option>
+</select>
+<label> Text Direction </label>	
+<select onchange="change_text_dir(this.options[this.selectedIndex].value);return false;">
+	<option value="left"> left </option>
+	<option value="center"> center</option>
+	<option value="right"> right </option>
+</select>
+ <label> Padding </label>	
+<select onchange="change_padding(this.options[this.selectedIndex].value);return false;">
+ 	<option value="0px"> 0 </option>
+	<option value="6px"> 6px </option>
+	<option value="12px"> 12px</option>
+	<option value="18px"> 18px </option>
+		<option value="24px"> 24px </option>
+</select> 
+ <label> Margin </label>	
+ <select onchange="change_margin(this.options[this.selectedIndex].value);return false;">
+ 	<option value="0px"> 0 </option>
+	<option value="6px"> 6px </option>
+	<option value="12px"> 12px</option>
+	<option value="18px"> 18px </option>
+		<option value="24px"> 24px </option>
+</select> 
+ <label> Text </label>	
+ <input type="text" onchange="change_text(this.value);return false;" />
+ 
+
+ 
+<label> Border Size </label>
+Slider 1: 
+<div class="slider" id="slider01">
+	<div class="left"></div>
+	<div class="right"></div>
+	<img style="left: 10px;" src="scripts/knob.png" height="15" width="21">
+</div>
+Box 1:
+<input value="0" id="output1" onchange="change_border_size(this.value+'px'); return false;">
+
+ 
+ 
+		</div>
+	</div>
+	<div class="section" id="s2">
+	<h4>Navigation <a href="" onclick="toggle('s2');return false;">+</a></h4>
+		<div class="s_inner">
+		
+		</div>	
+	</div>
+	<div class="section" id="s3">
+	<h4>Content<a href="" onclick="toggle('s3');return false;">+</a></h4>
+		<div class="s_inner">
+		
+		</div>	
+	</div>	
+	<div class="section" id="s4">
+	<h4>Sidebar<a href="" onclick="toggle('s4');return false;">+</a></h4>
+		<div class="s_inner">
+		
+		</div>	
+	</div>	
+	<div class="section" id="s9">
+	<h4>Footer<a href="" onclick="toggle('s9');return false;">+</a></h4>
+		<div class="s_inner">
+		
+		</div>	
+	</div>	
+
+</div>
+
+
+
+
+
+<a href="inspector.html"> Inspector Sample Page </a>
+
+
+
+
+<div id="page">
+
+	<div id="header">
+	<h1> Logo </h1>
+	
+	</div>
+
+</div>
+
+
+
+
+
+</body>
+</html>
