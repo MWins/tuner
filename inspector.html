@@ -1,0 +1,361 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<title>
+Template Tuner
+</title>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+
+<style>
+body	{	position: relative;	margin: 0 ; padding: 0;	}
+#tuner	{	position: absolute;top: 10px; left: 10px;  width: 220px; border: 1px solid #444; border-bottom: none;z-index: 5;
+				background-color: rgba(220,220,220,.7);
+	}
+.section	{	border-bottom: 1px solid #333;	font-size: 12px; font-family: arial; 	}
+.section h4	{	margin: 0; padding: 0; background: #eee; text-indent: 4px; border-bottom: 1px solid #333;		}
+.section h4 a	{	text-decoration: none; float:right;padding-right: 5px;	}
+.s_inner	{	height: 200px;	display: none; font-size: 11px; padding-left: 4px;	overflow:auto;}
+.s_inner table {	none; margin: 0; padding: 0; border-collapse: collapse; font-size: 10px;border: 1px solid #999;width:100%;	}
+.s_inner table td {	border-bottom: 1px solid #999; background: #fff; 	}
+.s_inner table th {	border-bottom: 2px solid #999; background: #ddd; 	}
+
+.t_section	{ height: 50px;	display: block;	border-bottom: 2px solid #333;}
+.t_section h4	{ margin: 0; padding: 0;  border-bottom: 1px solid #333; background: #eee;		}
+.t_inner	{	padding-left: 4px;	font-size: 12px; font-family: arial;}
+
+#tuner select	{ margin: 4px;	}
+label	{ display: block;	}
+
+.rb	{	border-right: 1px solid #ccc;	}
+
+
+
+#page	{ width: 800px; margin: 0 auto;position: relative; height: 700px;border: 1px solid #333; 	}
+#header	{border: 1px solid;	}
+#page h1,#page h2	{	margin: 0; padding: 0; 	}
+#nav	{	width: 800px; margin: 0 auto;	height: 60px; }
+#content	{ width: 500px; height: 520px; float:left; display: block; overflow:hidden; margin:0 4px; border:1px solid;	}
+#sidebar	{	width: 280px; height: 400px; display: block; clear: right; float:left; margin:0 5px;	}
+#footer		{width: 800px; height: 60px; display: block; clear:both;	}
+
+
+</style>
+
+<script>
+jQuery.fn.css2 = jQuery.fn.css;
+jQuery.fn.css = function() {
+    if (arguments.length) return jQuery.fn.css2.apply(this, arguments);
+    var attr = ['font-family','font-size','font-weight','font-style','color',
+        'text-transform','text-decoration','letter-spacing','word-spacing',
+        'line-height','text-align','vertical-align','direction','background-color',
+        'background-image','background-repeat','background-position',
+        'background-attachment','opacity','width','height','top','right','bottom',
+        'left','margin-top','margin-right','margin-bottom','margin-left',
+        'padding-top','padding-right','padding-bottom','padding-left',
+        'border-top-width','border-right-width','border-bottom-width',
+        'border-left-width','border-top-color','border-right-color',
+        'border-bottom-color','border-left-color','border-top-style',
+        'border-right-style','border-bottom-style','border-left-style','position',
+        'display','visibility','z-index','overflow-x','overflow-y','white-space',
+        'clip','float','clear','cursor','list-style-image','list-style-position',
+        'list-style-type','marker-offset'];
+    var len = attr.length, obj = {};
+    for (var i = 0; i < len; i++) 
+        obj[attr[i]] = jQuery.fn.css2.call(this, attr[i]);
+    return obj;
+}
+
+    var attr = ['font-family','font-size','font-weight','font-style','color',
+        'text-transform','text-decoration','letter-spacing','word-spacing',
+        'line-height','text-align','vertical-align','direction','background-color',
+        'background-image','background-repeat','background-position',
+        'background-attachment','opacity','width','height','top','right','bottom',
+        'left','margin-top','margin-right','margin-bottom','margin-left',
+        'padding-top','padding-right','padding-bottom','padding-left',
+        'border-top-width','border-right-width','border-bottom-width',
+        'border-left-width','border-top-color','border-right-color',
+        'border-bottom-color','border-left-color','border-top-style',
+        'border-right-style','border-bottom-style','border-left-style','position',
+        'display','visibility','z-index','overflow-x','overflow-y','white-space',
+        'clip','float','clear','cursor','list-style-image','list-style-position',
+        'list-style-type','marker-offset'];
+
+$(document).ready(function(){
+
+	//Hide (Collapse) the toggle containers on load
+	$(".s_inner").hide(); 
+
+	//Switch the "Open" and "Close" state per click then slide up/down (depending on open/close state)
+	$("h4.trigger").click(function(){
+		$(this).toggleClass("active").next().slideToggle("slow");
+		return false; //Prevent the browser jump to the link anchor
+	});
+	
+	
+	
+	
+	
+var csslist = '<table><tr><th class="rb">attribute</th><th>Value</th></tr>';
+$.each(attr, function(index, value) { 
+  csslist += '<tr><td class="rb">' + value + '</td><td> ' + $("#header").css(value) + '</td></tr>'; 
+});
+csslist += '</table>';
+
+
+
+
+
+
+var kids = $("#header").children();
+var totalKids = kids.size();
+if(totalKids > 0) csslist += '<h2>Contains : </h2>';
+for(i=0;i<totalKids;i++)
+	{
+
+	csslist += '<h3>' + kids.get(i).nodeName + '</h3>';
+	}
+
+$("#s12").html(csslist);
+
+
+
+var csslist = '<table><tr><th class="rb">attribute</th><th>Value</th></tr>';
+$.each(attr, function(index, value) { 
+  csslist += '<tr><td class="rb">' + value + '</td><td> ' + $("#nav").css(value) + '</td></tr>'; 
+});
+csslist += '</table>';
+
+
+
+var kids = $("#nav").children();
+var totalKids = kids.size();
+if(totalKids > 0) csslist += '<h2>Contains : </h2>';
+for(i=0;i<totalKids;i++)
+	{
+
+	csslist += '<h3>' + kids.get(i).nodeName + '</h3>';
+	}
+
+
+
+
+
+
+$("#s13").html(csslist);
+
+
+var csslist = '<table><tr><th class="rb">attribute</th><th>Value</th></tr>';
+$.each(attr, function(index, value) { 
+  csslist += '<tr><td class="rb">' + value + '</td><td> ' + $("#content").css(value) + '</td></tr>'; 
+});
+csslist += '</table>';
+
+var kids = $("#content").children();
+var totalKids = kids.size();
+if(totalKids > 0) csslist += '<h2>Contains : </h2>';
+for(i=0;i<totalKids;i++)
+	{
+
+	csslist += '<h3>' + kids.get(i).nodeName + '</h3>';
+	}
+$("#s14").html(csslist);
+
+
+var csslist = '<table><tr><th class="rb">attribute</th><th>Value</th></tr>';
+$.each(attr, function(index, value) { 
+  csslist += '<tr><td class="rb">' + value + '</td><td> ' + $("#sidebar").css(value) + '</td></tr>'; 
+});
+csslist += '</table>';
+
+var kids = $("#sidebar").children();
+var totalKids = kids.size();
+if(totalKids > 0) csslist += '<h2>Contains : </h2>';
+for(i=0;i<totalKids;i++)
+	{
+
+	csslist += '<h3>' + kids.get(i).nodeName + '</h3>';
+	}
+$("#s15").html(csslist);
+
+
+var csslist = '<table><tr><th class="rb">attribute</th><th>Value</th></tr>';
+$.each(attr, function(index, value) { 
+  csslist += '<tr><td class="rb">' + value + '</td><td> ' + $("#footer").css(value) + '</td></tr>'; 
+});
+csslist += '</table>';
+
+var kids = $("#footer").children();
+var totalKids = kids.size();
+if(totalKids > 0) csslist += '<h2>Contains : </h2>';
+for(i=0;i<totalKids;i++)
+	{
+
+	csslist += '<h3>' + kids.get(i).nodeName + '</h3>';
+	}
+$("#s16").html(csslist);
+
+
+
+});
+
+
+
+
+
+
+
+
+
+</script>
+
+</head>
+<body>
+
+<div id="tuner">
+	<div class="t_section" id="tinfo">
+	<h4>Info  </h4>
+		<div class="t_inner">
+		Template : Default <br />
+
+		</div>
+	</div>
+
+	<div class="section" id="s1">
+	<h4 class="trigger">Header <a href="#">+</a></h4>
+		<div class="s_inner">
+		<div class="block" id="s12">
+		<!--
+		<select id="hdr_list" class="property_list" onchange="load(this);">
+			<option value="bgclr"> Background Color</option>
+			<option value="font"> Font-Family </option>
+			<option value="fontcolor"> Font Color </option>			
+			<option value="size"> Size </option>
+			<option value="height"> Height </option>
+			<option value="width"> Width </option>
+			<option value="border"> Border </option>
+		</select>
+		--> <!--
+<label>Font Color </label>		
+ <input class="color" onchange="document.getElementsByTagName('H1')[0].style.color = '#'+this.color">
+ <label> Background Color </label>		
+<input class="color" onchange="document.getElementsByTagName('H1')[0].style.backgroundColor = '#'+this.color">
+<label> Border Color </label>		
+ <input class="color" onchange="document.getElementsByTagName('H1')[0].style.borderColor = '#'+this.color">
+
+<label> Border Size </label>	
+ <select onchange="change_border_size(this.options[this.selectedIndex].value);return false;">
+ <option value="1px">1</option>
+ <option value="2px">2</option>
+ <option value="3px">3</option>
+ <option value="5px">5</option>
+ <option value="10px">10</option>
+ </select>
+
+<label> Font Family </label>	
+<select onchange="change_font_family(this.options[this.selectedIndex].value);return false;">
+	<option value="arial"> Arial </option>
+	<option value="tahoma"> Tahoma </option>
+	<option value="fantasy"> Fantasy </option>
+</select>
+<label> Font Size </label>	
+<select onchange="change_font_size(this.options[this.selectedIndex].value);return false;">
+	<option value="18px"> 18px </option>
+	<option value="22px"> 22px</option>
+	<option value="28px"> 28px </option>
+		<option value="48px"> 48px </option>
+</select>
+<label> Text Direction </label>	
+<select onchange="change_text_dir(this.options[this.selectedIndex].value);return false;">
+	<option value="left"> left </option>
+	<option value="center"> center</option>
+	<option value="right"> right </option>
+</select>
+ <label> Padding </label>	
+<select onchange="change_padding(this.options[this.selectedIndex].value);return false;">
+ 	<option value="0px"> 0 </option>
+	<option value="6px"> 6px </option>
+	<option value="12px"> 12px</option>
+	<option value="18px"> 18px </option>
+		<option value="24px"> 24px </option>
+</select> 
+ <label> Margin </label>	
+ <select onchange="change_margin(this.options[this.selectedIndex].value);return false;">
+ 	<option value="0px"> 0 </option>
+	<option value="6px"> 6px </option>
+	<option value="12px"> 12px</option>
+	<option value="18px"> 18px </option>
+		<option value="24px"> 24px </option>
+</select> 
+ <label> Text </label>	
+ <input type="text" onchange="change_text(this.value);return false;" />
+ 
+
+ 
+<label> Border Size </label>
+-->
+ 
+		</div>
+	</div>
+	<div class="section">
+	<h4 class="trigger">Navigation <a href="">+</a></h4>
+		<div class="s_inner">
+		<div class="block" id="s13">
+</div>		
+		</div>	
+	</div>
+	<div class="section">
+	<h4 class="trigger">Content<a href="">+</a></h4>
+		<div class="s_inner">
+		<div class="block" id="s14">
+</div>		
+		</div>	
+	</div>	
+	<div class="section">
+	<h4 class="trigger">Sidebar<a href="">+</a></h4>
+		<div class="s_inner">
+		<div class="block" id="s15">
+</div>		
+		</div>	
+	</div>	
+	<div class="section">
+	<h4 class="trigger">Footer<a href="">+</a></h4>
+		<div class="s_inner">
+		<div class="block" id="s16">
+</div>		
+		</div>	
+	</div>	
+</div>
+</div>
+
+
+<div id="page">
+
+	<div id="header">
+	<h1> Logo </h1><h2> Go</h2>
+	
+	</div>
+	<div id="nav">
+	<ul><li><a href=""> link </a></li></ul>
+	
+	</div>	
+		<div id="content">
+	<h2> title </h2>
+	<p>
+	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis arcu leo. Duis libero urna, mattis id ultrices id, pretium vel libero. Vestibulum orci lacus, fermentum vitae semper et, hendrerit et purus. Duis tempor, quam nec vestibulum interdum, </p>
+	<p>tortor ante sagittis libero, a mollis sem mi quis ante. Sed nec sagittis velit. Phasellus at lacinia leo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc adipiscing, nibh id rutrum placerat, urna turpis lacinia purus, eu sollicitudin nisl neque eget quam. Nulla lacinia mollis luctus. 
+	</p>
+	</div>
+		<div id="sidebar">
+	<h2> on the side </h2>
+	
+	</div>
+	<div id="footer">
+	footer
+	
+	</div>
+</div>
+
+
+</body>
+</html>
